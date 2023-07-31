@@ -14,6 +14,8 @@ Install `contributte/kernel` via `composer require contributte/kernel`.
 
 ## Usage
 
+Create file `app/Bootstra.php`.
+
 ```php
 <?php declare(strict_types = 1);
 
@@ -29,7 +31,7 @@ use Contributte\Kernel\Modules\TracyModule;
 final class Bootstrap
 {
 
-	public static function boot(): Configurator
+	public static function boot(): Kernel
 	{
 		return Bootloader::of(__DIR__)
 			->use(TracyModule::create())
@@ -48,4 +50,20 @@ final class Bootstrap
 	}
 
 }
+```
+
+## Structure
+
+This package assume you are using this project structure. If you are using different one, you need to update `appDir`, `logDir`, `tempDir`, `wwwDir` and `configDir`.
+
+```
+├── app
+│ ├── Bootstrap.php
+├── config
+│ ├── config.neon
+├── var
+│ ├── log
+│ └── tmp
+└── www
+    └── index.php
 ```
