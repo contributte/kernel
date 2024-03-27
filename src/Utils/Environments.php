@@ -10,6 +10,8 @@ class Environments
 	public const PREFIX = 'NETTE';
 	public const DELIMITER = '__';
 	public const DEBUG = 'NETTE_DEBUG';
+	public const ENV = 'NETTE_ENV';
+	public const COOKIE = 'nette-debug';
 
 	/**
 	 * @param mixed[] $variables
@@ -55,11 +57,35 @@ class Environments
 		return $parameters;
 	}
 
+	public static function getEnvMode(): ?string
+	{
+		$env = (string) getenv(self::ENV);
+
+		if ($env === '') {
+			return null;
+		}
+
+		// remove special characters
+		$env = preg_replace('/[^a-zA-Z0-9_]/', '', $env);
+
+		return $env;
+	}
+
 	public static function isDebug(): bool
 	{
 		$debug = (string) getenv(self::DEBUG);
 
 		return strtolower($debug) === 'true' || $debug === '1' || $debug === 'yes';
+	}
+
+	public static function isDebugCookie(?string $cookie): bool
+	{
+		if ($cookie === null || strlen($cookie) <= 0) {
+			return false;
+		}
+
+		// phpcs:ignore
+		return ($_COOKIE[self::COOKIE] ?? null) === $cookie;
 	}
 
 }
