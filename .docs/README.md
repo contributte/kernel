@@ -34,6 +34,7 @@ final class Bootstrap
 	public static function boot(): Kernel
 	{
 		return Bootloader::of(__DIR__)
+			->from(MyAppPreset::create())
 			->use(TracyModule::create())
 			->use(ConfigModule::create())
 			->use(EnvModule::create())

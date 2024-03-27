@@ -3,14 +3,18 @@
 namespace Contributte\Kernel;
 
 use Contributte\Kernel\Modules\BaseModule;
+use Contributte\Kernel\Presets\BasePreset;
 
 class Bootloader
 {
 
 	private Bootconf $config;
 
-	/** @var BaseModule[] */
+	/** @var BasePreset[] */
 	private array $presets = [];
+
+	/** @var BaseModule[] */
+	private array $modules = [];
 
 	/** @var callable[] */
 	private array $fns = [];
@@ -27,9 +31,16 @@ class Bootloader
 		);
 	}
 
-	public function use(BaseModule $preset): self
+	public function from(BasePreset $preset): self
 	{
 		$this->presets[] = $preset;
+
+		return $this;
+	}
+
+	public function use(BaseModule $preset): self
+	{
+		$this->modules[] = $preset;
 
 		return $this;
 	}
@@ -46,7 +57,10 @@ class Bootloader
 		$configurator = new Configurator();
 
 		// Trigger presets
-		array_map(fn (BaseModule $preset) => $preset->apply($configurator, $this->config), $this->presets);
+		array_map(fn (BasePreset $preset) => $preset->apply($this), $this->presets);
+
+		// Trigger modules
+		array_map(fn (BaseModule $module) => $module->apply($configurator, $this->config), $this->modules);
 
 		// Trigger callbacks
 		array_map(fn (callable $fn) => $fn($configurator, $this->config), $this->fns);

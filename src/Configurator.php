@@ -7,4 +7,12 @@ use Nette\Bootstrap\Configurator as NetteConfigurator;
 class Configurator extends NetteConfigurator
 {
 
+	/**
+	 * @return array<string,mixed>
+	 */
+	public function getStaticParameters(): array
+	{
+		return $this->staticParameters;
+	}
+
 }
