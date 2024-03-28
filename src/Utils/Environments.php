@@ -21,10 +21,10 @@ class Environments
 	public static function getVariables(array $variables, string $prefix = self::PREFIX, string $delimiter = self::DELIMITER): array
 	{
 		// @phpcs:ignore
-		$map = function (&$array, array $keys, $value) use (&$map) {
-			if (count($keys) <= 0)
-
+		$map = static function (&$array, array $keys, $value) use (&$map) {
+			if (count($keys) <= 0) {
 				return $value;
+			}
 
 			$key = array_shift($keys);
 
@@ -46,9 +46,9 @@ class Environments
 		foreach ($variables as $key => $value) {
 			// Ensure value
 			$value = getenv($key);
-			if (strpos($key, $prefix) === 0 && $value !== false) {
+			if (strpos($key, $prefix . $delimiter) === 0 && $value !== false) {
 				// Parse PREFIX{delimiter=__}{NAME-1}{delimiter=__}{NAME-N}
-				$keys = explode($delimiter, $key);
+				$keys = explode($delimiter, strtolower(substr($key, strlen($prefix . $delimiter))));
 				// Make array structure
 				$map($parameters, $keys, $value);
 			}
