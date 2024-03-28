@@ -29,7 +29,7 @@ class EnvModule extends BaseModule
 		// @phpstan-ignore-next-line
 		$configurator->onCompile[] = static function (Configurator $configurator, Compiler $compiler): void {
 			// phpcs:ignore SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
-			$compiler->addConfig(['parameters' => Environments::getVariables($_SERVER)]);
+			$compiler->addConfig(['parameters' => Environments::getVariables($_ENV + $_SERVER)]);
 		};
 	}
 
