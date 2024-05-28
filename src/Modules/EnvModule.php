@@ -25,11 +25,15 @@ class EnvModule extends BaseModule
 
 	public function apply(Configurator $configurator, Bootconf $config): void
 	{
+		// phpcs:ignore SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
+		$envs = Environments::getVariables($_ENV + $_SERVER);
+
+		// Static parameters to apply changes to DI container if ENV is changed
+		$configurator->addStaticParameters($envs);
+
 		// environment variables
-		// @phpstan-ignore-next-line
-		$configurator->onCompile[] = static function (Configurator $configurator, Compiler $compiler): void {
-			// phpcs:ignore SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
-			$compiler->addConfig(['parameters' => Environments::getVariables($_ENV + $_SERVER)]);
+		$configurator->onCompile[] = static function (Configurator $configurator, Compiler $compiler) use ($envs): void {
+			$compiler->addConfig(['parameters' => $envs]);
 		};
 	}
 
