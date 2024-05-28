@@ -43,9 +43,11 @@ class Environments
 		};
 
 		$parameters = [];
+
 		foreach ($variables as $key => $value) {
 			// Ensure value
 			$value = getenv($key);
+
 			if (strpos($key, $prefix . $delimiter) === 0 && $value !== false) {
 				// Parse PREFIX{delimiter=__}{NAME-1}{delimiter=__}{NAME-N}
 				$keys = explode($delimiter, strtolower(substr($key, strlen($prefix . $delimiter))));

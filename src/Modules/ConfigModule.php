@@ -34,7 +34,6 @@ class ConfigModule extends BaseModule
 		]);
 
 		// extensions
-		assert(is_array($configurator->onCompile));
 		$configurator->onCompile[] = static function (Configurator $configurator, Compiler $compiler): void {
 			$compiler->addExtension('params', new ParametersExtension());
 		};
