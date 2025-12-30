@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\Cases\Override;
+namespace Tests\Cases\Utils;
 
 use Contributte\Kernel\Utils\Environments;
 use Contributte\Tester\Toolkit;
