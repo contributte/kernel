@@ -7,10 +7,7 @@ use Contributte\Kernel\Configurator;
 use Contributte\Kernel\DI\ParametersExtension;
 use Nette\DI\Compiler;
 
-/**
- * @phpstan-consistent-constructor
- */
-class ConfigModule extends BaseModule
+final class ConfigModule extends BaseModule
 {
 
 	private function __construct()
@@ -20,7 +17,7 @@ class ConfigModule extends BaseModule
 
 	public static function create(): self
 	{
-		return new static();
+		return new self();
 	}
 
 	public function apply(Configurator $configurator, Bootconf $config): void
@@ -34,6 +31,7 @@ class ConfigModule extends BaseModule
 		]);
 
 		// extensions
+		// @phpstan-ignore assign.propertyType
 		$configurator->onCompile[] = static function (Configurator $configurator, Compiler $compiler): void {
 			$compiler->addExtension('params', new ParametersExtension());
 		};

@@ -7,10 +7,7 @@ use Contributte\Kernel\Configurator;
 use Contributte\Kernel\Utils\Environments;
 use Nette\DI\Compiler;
 
-/**
- * @phpstan-consistent-constructor
- */
-class EnvModule extends BaseModule
+final class EnvModule extends BaseModule
 {
 
 	private function __construct()
@@ -20,7 +17,7 @@ class EnvModule extends BaseModule
 
 	public static function create(): self
 	{
-		return new static();
+		return new self();
 	}
 
 	public function apply(Configurator $configurator, Bootconf $config): void
@@ -32,6 +29,7 @@ class EnvModule extends BaseModule
 		$configurator->addStaticParameters($envs);
 
 		// environment variables
+		// @phpstan-ignore assign.propertyType
 		$configurator->onCompile[] = static function (Configurator $configurator, Compiler $compiler) use ($envs): void {
 			$compiler->addConfig(['parameters' => $envs]);
 		};

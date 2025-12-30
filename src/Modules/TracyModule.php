@@ -6,10 +6,7 @@ use Contributte\Kernel\Bootconf;
 use Contributte\Kernel\Configurator;
 use Contributte\Kernel\Utils\Environments;
 
-/**
- * @phpstan-consistent-constructor
- */
-class TracyModule extends BaseModule
+final class TracyModule extends BaseModule
 {
 
 	private function __construct()
@@ -19,7 +16,7 @@ class TracyModule extends BaseModule
 
 	public static function create(): self
 	{
-		return new static();
+		return new self();
 	}
 
 	public function apply(Configurator $configurator, Bootconf $config): void

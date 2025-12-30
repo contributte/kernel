@@ -5,10 +5,7 @@ namespace Contributte\Kernel\Modules;
 use Contributte\Kernel\Bootconf;
 use Contributte\Kernel\Configurator;
 
-/**
- * @phpstan-consistent-constructor
- */
-class InjectionModule extends BaseModule
+final class InjectionModule extends BaseModule
 {
 
 	private function __construct()
@@ -18,7 +15,7 @@ class InjectionModule extends BaseModule
 
 	public static function create(): self
 	{
-		return new static();
+		return new self();
 	}
 
 	public function apply(Configurator $configurator, Bootconf $config): void
