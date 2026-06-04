@@ -11,31 +11,83 @@
   <a href="https://github.com/contributte/kernel"><img src="https://badgen.net/github/license/contributte/kernel"></a>
   <a href="https://bit.ly/ctteg"><img src="https://badgen.net/badge/support/gitter/cyan"></a>
   <a href="https://bit.ly/cttfo"><img src="https://badgen.net/badge/support/forum/yellow"></a>
-  <a href="https://contributte.org/partners.html"><img src="https://badgen.net/badge/become/a%20patron/F96854"></a>
-<p>
-
+  <a href="https://contributte.org/partners.html"><img src="https://badgen.net/badge/sponsor/donations/F96854"></a>
+</p>
 <p align=center>
 Website 🚀 <a href="https://contributte.org">contributte.org</a> | Contact 👨🏻‍💻 <a href="https://f3l1x.io">f3l1x.io</a> | Twitter 🐦 <a href="https://twitter.com/contributte">@contributte</a>
 </p>
 
-## Usage
+Convenient bootloader for Nette (@nette) applications.
 
-To install the latest version of `contributte/kernel` use [Composer](https://getcomposer.org).
-
-```
-composer require contributte/kernel
-```
-
-## Documentation
-
-For details on how to use this package, check out our [documentation](.docs).
-
-## Version
+## Versions
 
 | State  | Version | Branch   | Nette | PHP     |
 |--------|---------|----------|-------|---------|
 | dev    | `^0.2`  | `master` | 4.0+  | `>=8.2` |
 | stable | `^0.1`  | `master` | 3.1+  | `>=8.2` |
+
+## Installation
+
+```bash
+composer require contributte/kernel
+```
+
+## Usage
+
+Create file `app/Bootstrap.php`.
+
+```php
+<?php declare(strict_types = 1);
+
+namespace App;
+
+use Contributte\Kernel\Bootloader;
+use Contributte\Kernel\Kernel;
+use Contributte\Kernel\Modules\ConfigModule;
+use Contributte\Kernel\Modules\EnvModule;
+use Contributte\Kernel\Modules\InjectionModule;
+use Contributte\Kernel\Modules\TracyModule;
+
+final class Bootstrap
+{
+
+	public static function boot(): Kernel
+	{
+		return Bootloader::of(__DIR__)
+			->from(MyAppPreset::create())
+			->use(TracyModule::create())
+			->use(ConfigModule::create())
+			->use(EnvModule::create())
+			->use(InjectionModule::create())
+			->boot();
+	}
+
+	public static function run(): void
+	{
+		self::boot()
+			->createContainer()
+			->getByType(YourApplication::class)
+			->run();
+	}
+
+}
+```
+
+## Structure
+
+This package assume you are using this project structure. If you are using different one, you need to update `appDir`, `logDir`, `tempDir`, `wwwDir` and `configDir`.
+
+```
+├── app
+│ ├── Bootstrap.php
+├── config
+│ ├── config.neon
+├── var
+│ ├── log
+│ └── tmp
+└── www
+    └── index.php
+```
 
 ## Development
 
