@@ -75,7 +75,7 @@ final class Bootstrap
 
 ## Structure
 
-This package assume you are using this project structure. If you are using different one, you need to update `appDir`, `logDir`, `tempDir`, `wwwDir` and `configDir`.
+This package assumes you are using this project structure. If you are using a different one, you need to update `appDir`, `logDir`, `tempDir`, `wwwDir` and `configDir`.
 
 ```
 ├── app
@@ -93,7 +93,7 @@ This package assume you are using this project structure. If you are using diffe
 
 See [how to contribute](https://contributte.org/contributing.html) to this package.
 
-This package is currently maintaining by these authors.
+This package is currently maintained by these authors.
 
 <a href="https://github.com/f3l1x">
   <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
